@@ -1,0 +1,2 @@
+Timestamp,Elapsed(s),Backend_Replicas,Gateway_Status
+2026-01-03 13:23:44,1,3,UP

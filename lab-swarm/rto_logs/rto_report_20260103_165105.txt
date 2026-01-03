@@ -1,0 +1,60 @@
+=====================================
+RTO MEASUREMENT REPORT
+=====================================
+
+Test Information:
+-----------------
+Date/Time: 2026-01-03 16:51:11
+Worker Node: worker1
+Service Name: web-backend
+Original Container ID: cc1da142a975
+New Container ID: 17d884f63eac
+
+Test Results:
+-------------
+Test Start: 2026-01-03 16:51:05.323
+Recovery Time: 2026-01-03 16:51:11.211
+RTO (Recovery Time Objective): 5.887824216 seconds
+Status: SUCCESS
+
+Timeline:
+---------
+1767459065.098290331|Getting container ID for service web-backend
+1767459065.228784407|Recording initial state
+1767459065.313561610|Checking initial service health
+1767459065.321103909|Service is healthy before test
+1767459065.324662478|TEST START - Killing container cc1da142a975
+1767459065.681600680|Container killed
+1767459065.684344640|Monitoring service recovery
+1767459071.205198908|New container detected: 17d884f63eac
+1767459071.212043689|Service recovered and healthy
+1767459071.215084428|TEST COMPLETE - RTO: 5.887824216 seconds
+1767459071.216660860|Collecting final state
+1767459071.295488787|Collecting service logs
+
+Service Configuration:
+---------------------
+Replicas: 
+N/A
+Restart Policy: 
+N/A
+
+Initial State:
+-------------
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                    PORTS     NAMES
+cc1da142a975   nginx:stable   "/docker-entrypoint.…"   About a minute ago   Up 59 seconds (healthy)   80/tcp    resiliencia_web-backend.1.vprn2m09orysopjma7xnvu5r1
+
+Final State:
+-----------
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                                     PORTS     NAMES
+17d884f63eac   nginx:stable   "/docker-entrypoint.…"   5 seconds ago   Up Less than a second (health: starting)   80/tcp    resiliencia_web-backend.1.r2boopreie8g3w1kpqbzh81iw
+
+Observations:
+------------
+- Container was forcefully killed using 'docker kill'
+- Docker Swarm detected the failure and started a new container
+- Health check endpoint: http://192.168.1.70:8080/health
+- Service recovered within acceptable time
+
+Generated: Sat Jan  3 04:51:11 PM WET 2026
+=====================================

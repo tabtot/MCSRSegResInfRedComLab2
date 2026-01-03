@@ -1,0 +1,60 @@
+=====================================
+RTO MEASUREMENT REPORT
+=====================================
+
+Test Information:
+-----------------
+Date/Time: 2026-01-03 16:46:54
+Worker Node: worker1
+Service Name: web-backend
+Original Container ID: 7577892baf09
+New Container ID: 9e3dbd423679
+
+Test Results:
+-------------
+Test Start: 2026-01-03 16:46:47.969
+Recovery Time: 2026-01-03 16:46:54.787
+RTO (Recovery Time Objective): 6.817692038 seconds
+Status: SUCCESS
+
+Timeline:
+---------
+1767458807.797913186|Getting container ID for service web-backend
+1767458807.886221473|Recording initial state
+1767458807.962222964|Checking initial service health
+1767458807.968224732|Service is healthy before test
+1767458807.970528136|TEST START - Killing container 7577892baf09
+1767458808.324503231|Container killed
+1767458808.326177733|Monitoring service recovery
+1767458814.781207291|New container detected: 9e3dbd423679
+1767458814.788219032|Service recovered and healthy
+1767458814.792133814|TEST COMPLETE - RTO: 6.817692038 seconds
+1767458814.793671896|Collecting final state
+1767458814.855606979|Collecting service logs
+
+Service Configuration:
+---------------------
+Replicas: 
+N/A
+Restart Policy: 
+N/A
+
+Initial State:
+-------------
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                   PORTS     NAMES
+7577892baf09   nginx:stable   "/docker-entrypoint.…"   9 minutes ago   Up 9 minutes (healthy)   80/tcp    resiliencia_web-backend.3.ix5gjvyhuj6dk3hkguzb5oibl
+
+Final State:
+-----------
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                           PORTS     NAMES
+9e3dbd423679   nginx:stable   "/docker-entrypoint.…"   6 seconds ago   Up 1 second (health: starting)   80/tcp    resiliencia_web-backend.3.0uvzdkr17tqp2sllq15jr7iot
+
+Observations:
+------------
+- Container was forcefully killed using 'docker kill'
+- Docker Swarm detected the failure and started a new container
+- Health check endpoint: http://192.168.1.70:8080/health
+- Service recovered within acceptable time
+
+Generated: Sat Jan  3 04:46:54 PM WET 2026
+=====================================

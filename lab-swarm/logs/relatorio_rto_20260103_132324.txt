@@ -1,0 +1,203 @@
+
+================================================================================
+  TESTE DE RESILIÊNCIA - RTO (Arquitetura Backend + Gateway)
+================================================================================
+
+[0;34m[INFO][0m Serviço Backend: resiliencia_web-backend (workers)
+[0;34m[INFO][0m Serviço Gateway: resiliencia_web-gateway (manager)
+[0;34m[INFO][0m Gateway URL: http://192.168.1.70:8080
+[0;34m[INFO][0m Data/Hora: 2026-01-03 13:23:24 WET
+
+
+================================================================================
+  FASE 1: Verificação do Estado Inicial
+================================================================================
+
+[0;34m[INFO][0m Verificando serviços...
+[0;32m[✓][0m Serviço backend encontrado: resiliencia_web-backend
+[0;32m[✓][0m Serviço gateway encontrado: resiliencia_web-gateway
+
+[0;34m[INFO][0m Réplicas backend (workers): 3/3
+[0;34m[INFO][0m Réplicas gateway (manager): 1/1
+
+[0;34m[INFO][0m Estado detalhado das réplicas BACKEND:
+ID             NAME                        NODE      CURRENT STATE
+bi4w7fwstcls   resiliencia_web-backend.1   worker2   Running 4 minutes ago
+i585bsbynr97   resiliencia_web-backend.2   worker3   Running 4 minutes ago
+up6jbrzy6cph   resiliencia_web-backend.3   worker1   Running 4 minutes ago
+
+[0;34m[INFO][0m Estado do GATEWAY:
+ID             NAME                        NODE      CURRENT STATE
+z4a61zaobtqe   resiliencia_web-gateway.1   teety     Running 4 minutes ago
+
+[0;34m[INFO][0m Testando acesso ao gateway...
+[0;32m[✓][0m Gateway está ACESSÍVEL em http://192.168.1.70:8080
+
+================================================================================
+  FASE 2: Seleção da Réplica Backend para Simulação de Falha
+================================================================================
+
+[0;34m[INFO][0m Tasks backend disponíveis: 3
+[0;34m[INFO][0m Task backend selecionada:
+[0;34m[INFO][0m   - Task ID: bi4w7fwstclszkilc6t28ov1t
+[0;34m[INFO][0m   - Task Name: resiliencia_web-backend.1
+[0;34m[INFO][0m   - Node: worker2
+[1;33m[⚠][0m Container não acessível localmente (está em worker)
+[0;34m[INFO][0m Será usado método alternativo (scaling)
+
+================================================================================
+  FASE 3: Coleta de Logs Antes da Falha
+================================================================================
+
+[0;34m[INFO][0m Coletando logs do backend...
+[0;34m[INFO][0m Coletando logs do gateway...
+[0;32m[✓][0m Coletados 0 linhas do backend
+[0;32m[✓][0m Coletados 0 linhas do gateway
+[0;34m[INFO][0m Logs salvos em: ./logs/logs_20260103_132324.txt
+
+================================================================================
+  FASE 4: Simulação de Falha do Container Backend
+================================================================================
+
+[1;33m[⚠][0m Preparando para simular falha no BACKEND...
+[0;34m[INFO][0m IMPORTANTE: O gateway deve continuar acessível durante toda a falha!
+[0;34m[INFO][0m Timestamp da falha: 2026-01-03 13:23:26.504
+
+[0;34m[INFO][0m Método: Forçando recriação via scaling
+[1;33m[⚠][0m Executando: scale down/up do backend
+[0;32m[✓][0m Scaling do backend executado
+
+
+================================================================================
+  FASE 5: Monitoramento da Recuperação + Disponibilidade do Gateway
+================================================================================
+
+[0;34m[INFO][0m Monitorando recuperação do backend...
+[0;34m[INFO][0m Testando disponibilidade contínua do gateway...
+[0;34m[INFO][0m Aguardando que todas as 3 réplicas backend voltem ao estado Running...
+
+
+
+================================================================================
+  FASE 6: Cálculo do RTO e Análise de Disponibilidade
+================================================================================
+
+[0;32m[✓][0m BACKEND RECUPERADO COM SUCESSO!
+
+[0;34m[INFO][0m Timestamp de falha:      2026-01-03 13:23:26.504
+[0;34m[INFO][0m Timestamp de recuperação: 2026-01-03 13:23:47.010
+
+[0;32m[✓][0m RTO DO BACKEND: 20.51 segundos
+
+[1;33m[⚠][0m Avaliação RTO: ACEITÁVEL (20-30s)
+
+[0;34m[INFO][0m ANÁLISE DE DISPONIBILIDADE DO GATEWAY:
+[0;34m[INFO][0m   Total de verificações: 1
+[0;34m[INFO][0m   Falhas detectadas: 0
+[0;34m[INFO][0m   Downtime estimado: 0s
+
+[0;32m[✓][0m DISPONIBILIDADE DO GATEWAY: 100.00% (100% - PERFEITO!)
+[0;32m[✓][0m Gateway manteve-se acessível durante TODA a falha do backend!
+
+================================================================================
+  FASE 7: Coleta de Logs e Eventos Pós-Falha
+================================================================================
+
+[0;34m[INFO][0m Coletando logs pós-falha do backend...
+[0;34m[INFO][0m Coletando logs pós-falha do gateway...
+[0;32m[✓][0m Coletadas 8 novas linhas de logs
+[0;34m[INFO][0m Coletando eventos do Docker...
+[0;32m[✓][0m Eventos salvos em: ./logs/eventos_20260103_132324.txt
+[0;32m[✓][0m Log de disponibilidade salvo em: ./logs/availability_20260103_132324.txt
+
+================================================================================
+  FASE 8: Estado Final dos Serviços
+================================================================================
+
+[0;34m[INFO][0m Estado atual do BACKEND:
+
+ID             NAME                        NODE      CURRENT STATE           ERROR
+bi4w7fwstcls   resiliencia_web-backend.1   worker2   Running 4 minutes ago   
+i585bsbynr97   resiliencia_web-backend.2   worker3   Running 4 minutes ago   
+i6x1bucc4xlp   resiliencia_web-backend.3   worker1   Running 8 seconds ago   
+
+[0;34m[INFO][0m Estado do GATEWAY:
+ID             NAME                        NODE      CURRENT STATE           ERROR
+z4a61zaobtqe   resiliencia_web-gateway.1   teety     Running 4 minutes ago   
+
+================================================================================
+  FASE 9: Relatório Final
+================================================================================
+
+
+================================================================================
+SUMÁRIO EXECUTIVO - ARQUITETURA BACKEND + GATEWAY
+================================================================================
+
+Teste:              Medição de RTO e Disponibilidade
+Data/Hora:          2026-01-03 13:23:47 WET
+
+CONFIGURAÇÃO:
+-------------
+Serviço Backend:    resiliencia_web-backend (workers)
+Serviço Gateway:    resiliencia_web-gateway (manager)
+Gateway URL:        http://192.168.1.70:8080
+Réplicas Backend:   3
+Réplicas Gateway:   1
+
+RESULTADOS - BACKEND:
+---------------------
+Réplicas Iniciais:  3/3
+Task Alvo:          resiliencia_web-backend.1
+Node:               worker2
+Método de Falha:    Scaling
+
+Timestamp Falha:    2026-01-03 13:23:26.504
+Timestamp Recovery: 2026-01-03 13:23:47.010
+RTO Medido:         20.51 segundos
+
+Status Final:       ✓ SUCESSO
+
+RESULTADOS - GATEWAY (DISPONIBILIDADE):
+---------------------------------------
+Total Verificações: 1
+Falhas Detectadas:  0
+Downtime:           0s
+Disponibilidade:    100.00%
+
+Avaliação:          ✓ PERFEITO (100%)
+
+PROGRESSO DA RECUPERAÇÃO:
+-------------------------
+T+1s: Backend=3/3 | Gateway=UP
+
+FICHEIROS GERADOS:
+------------------
+Relatório:          ./logs/relatorio_rto_20260103_132324.txt
+Logs:               ./logs/logs_20260103_132324.txt
+Eventos:            ./logs/eventos_20260103_132324.txt
+Disponibilidade:    ./logs/availability_20260103_132324.txt
+
+CONCLUSÕES:
+-----------
+✓ Sistema demonstrou ALTA RESILIÊNCIA:
+  - Backend recuperou automaticamente em 20.51s
+  - Gateway manteve 100% de disponibilidade
+  - Arquitetura provou separação efetiva de concerns
+
+================================================================================
+
+================================================================================
+  TESTE CONCLUÍDO
+================================================================================
+
+[0;32m[✓][0m Relatório completo gerado!
+
+[0;34m[INFO][0m Ficheiros gerados:
+[0;34m[INFO][0m   📄 Relatório:        ./logs/relatorio_rto_20260103_132324.txt
+[0;34m[INFO][0m   📋 Logs:             ./logs/logs_20260103_132324.txt
+[0;34m[INFO][0m   📊 Eventos:          ./logs/eventos_20260103_132324.txt
+[0;34m[INFO][0m   📈 Disponibilidade:  ./logs/availability_20260103_132324.txt
+
+[0;32m[✓][0m RTO: 20.51s | Disponibilidade: 100.00% ✓
+[0;32m[✓][0m Sistema demonstrou ALTA RESILIÊNCIA!

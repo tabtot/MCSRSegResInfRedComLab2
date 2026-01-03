@@ -1,0 +1,2 @@
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                    PORTS     NAMES
+cc1da142a975   nginx:stable   "/docker-entrypoint.…"   About a minute ago   Up 59 seconds (healthy)   80/tcp    resiliencia_web-backend.1.vprn2m09orysopjma7xnvu5r1

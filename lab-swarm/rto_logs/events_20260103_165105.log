@@ -1,0 +1,12 @@
+1767459065.098290331|Getting container ID for service web-backend
+1767459065.228784407|Recording initial state
+1767459065.313561610|Checking initial service health
+1767459065.321103909|Service is healthy before test
+1767459065.324662478|TEST START - Killing container cc1da142a975
+1767459065.681600680|Container killed
+1767459065.684344640|Monitoring service recovery
+1767459071.205198908|New container detected: 17d884f63eac
+1767459071.212043689|Service recovered and healthy
+1767459071.215084428|TEST COMPLETE - RTO: 5.887824216 seconds
+1767459071.216660860|Collecting final state
+1767459071.295488787|Collecting service logs
