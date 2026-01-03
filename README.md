@@ -4,6 +4,7 @@
 1. [Preparação do Ambiente](#1-preparação-do-ambiente)
 2. [Configuração do Swarm](#2-configuração-do-swarm)
 3. [Deploy da Stack](#3-deploy-da-stack)
+4. [Limpeza do Ambiente](#4-limpeza-do-ambiente)
  
 ---
 
@@ -189,5 +190,50 @@ docker service logs -f resiliencia_web
 ### 3.5 Observar ambiente docker - Portainer
 
 docker service create --name portainer --publish 9000:9000 --constraint 'node.role == manager' --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock portainer/portainer
-
 Aceder via http://<IP>:9000
+
+## 4. Limpeza do Ambiente
+
+### 4.1 Remover stack
+```bash
+# Remover stack resiliencia
+docker stack rm resiliencia
+
+# Remover stack de monitorização
+docker stack rm monitoring
+
+# Aguardar remoção completa
+sleep 10
+
+# Verificar
+docker service ls
+docker ps
+```
+
+### 4.2 Remover workers
+```bash
+
+docker rm -f worker1 worker2 worker3
+
+# Limpar nodes do swarm
+docker node ls --format "{{.ID}} {{.Hostname}}" | grep worker | awk '{print $1}' | xargs -r docker node rm --force
+
+```
+
+### 4.3 Sair do swarm 
+```bash
+docker swarm leave --force
+```
+
+### 4.4 Limpeza geral
+```bash
+# Remover volumes órfãos
+docker volume prune -f
+
+# Remover redes não utilizadas
+docker network prune -f
+
+# Remover imagens não utilizadas
+docker image prune -a -f
+```
+
