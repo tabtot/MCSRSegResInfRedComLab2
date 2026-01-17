@@ -45,13 +45,6 @@ services:
       timeout: 3s
       retries: 3
       start_period: 10s
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
-        labels: "service,role"
-        tag: "{{.Name}}/{{.ID}}"
 
   # Gateway no manager (expõe a porta)
   web-gateway:
@@ -87,13 +80,6 @@ services:
       - SETGID
     security_opt:
       - no-new-privileges:true
-    logging:
-      driver: json-file
-      options:
-        max-size: "10m"
-        max-file: "3"
-        labels: "service,role"
-        tag: "{{.Name}}/{{.ID}}"
 
 networks:
   webnet:
